@@ -1,0 +1,91 @@
+/* ESTILOS PARA ESCRITORIO Y TABLET */
+
+html {
+  background-color: #2a2a2a;
+}
+
+main {
+  padding: 20px;
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+.conjContainer {
+  display: flex;
+  width: 100%;
+  /* Usamos calc() para que la altura sea el 85% del viewport (100vh) 
+     menos la barra de navegación (15vh) y el padding de 'main' (40px) */
+  height: calc(85vh - 40px);
+  overflow: hidden; /* Oculta cualquier parte que se salga del contenedor */
+}
+
+.conjItem {
+  /* Cada item ocupa un tercio del espacio disponible */
+  flex: 1 1 33.33%;
+  position: relative;
+  overflow: hidden; /* Oculta los laterales de la imagen que no caben */
+  transition: flex 0.4s ease; /* Transición suave */
+}
+
+.conjItem img {
+  width: 100%;
+  height: 100%;
+  /* Escala la imagen para que cubra todo el contenedor, 
+     manteniendo la proporción y recortando el exceso */
+  object-fit: cover;
+  /* Asegura que la imagen siempre esté centrada, 
+     por lo que el recorte ocurre en los laterales */
+  object-position: center;
+  transition: transform 0.4s ease;
+}
+
+/* Al pasar el mouse, el item se expande un poco */
+.conjItem:hover {
+  flex-grow: 1.2; /* Aumenta el tamaño del item al pasar el mouse */
+}
+
+.conjItem:hover img {
+  transform: scale(1.05); /* Hace un ligero zoom a la imagen */
+}
+
+/* ESTILOS RESPONSIVE PARA CELULARES */
+
+@media (max-width: 425px) {
+  main {
+    padding: 0;
+  }
+
+  .conjContainer {
+    flex-direction: column;
+    height: 85vh; /* El contenedor ocupa el alto restante de la pantalla */
+
+    /* Efecto "swipe-up" */
+    scroll-snap-type: y mandatory; /* Fuerza el scroll a detenerse en un item */
+    overflow-y: scroll; /* Habilita el scroll vertical */
+  }
+
+  /* Oculta barra de scroll */
+  .conjContainer::-webkit-scrollbar {
+    display: none;
+  }
+  .conjContainer {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .conjItem {
+    width: 100%;
+    height: 80vh;
+    flex-shrink: 0; /* Evita que los items se encojan */
+    scroll-snap-align: start; /* Cada item se alinea con el inicio del contenedor al scrollear */
+  }
+
+  /* Desactiva los efectos hover en móvil */
+  .conjItem:hover {
+    flex-grow: 1;
+  }
+  .conjItem:hover img {
+    transform: none;
+  }
+}
